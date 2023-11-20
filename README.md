@@ -7,6 +7,7 @@
 + [Команды запуска автотестов](#Команды-запуска-автотестов)
 + [Сборка в Jenkins](#Сборка-в-Jenkins)
 + [Пример Allure-отчета](#Пример-Allure-отчета)
++ [Уведомление в Telegram о результатах прохождения тестов](#Уведомление-в-Telegram-о-результатах-прохождения-тестов)
   
 ### :wrench: ***Стек технологий***
 <p>
@@ -41,6 +42,9 @@ gradle clean test
 
 ### :large_blue_circle: ***Пример Allure-отчета***
 <kbd>![image](https://github.com/nice58/api_project/assets/103956147/28d1c4ad-5e16-4ef7-8ae4-d5f60647333f)</kbd>
+
+### :large_blue_circle: ***Уведомление в Telegram о результатах прохождения тестов***
+<kbd>![image](https://github.com/nice58/api_project/assets/103956147/d7490b6c-1586-43ee-8a9b-b097b75b3b98)</kbd>
 
 
 
