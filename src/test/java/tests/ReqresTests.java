@@ -14,6 +14,8 @@ import java.util.List;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.DeleteUserSpec.deleteUserRequestSpec;
 import static specs.DeleteUserSpec.deleteUserResponseSpec;
 import static specs.ListUsersSpec.listUsersRequestSpec;
@@ -36,24 +38,31 @@ public class ReqresTests extends TestBase{
                 .extract().as(ListUsersResponseModel.class));
 
         step ("Проверка общих данных", () -> {
-            assertThat(responseModel.getPage()).isEqualTo(2);
-            assertThat(responseModel.getPerPage()).isEqualTo(6);
-            assertThat(responseModel.getTotal()).isEqualTo(12);
-            assertThat(responseModel.getTotalPages()).isEqualTo(2);
-    });
+            assertAll(
+                    ()-> assertEquals(responseModel.getPage(), (2)),
+                    ()-> assertEquals(responseModel.getPerPage(), (6)),
+                    ()-> assertEquals(responseModel.getTotal(), (12)),
+                    ()-> assertEquals(responseModel.getTotalPages(), (2))
+            );
+        });
+
         step("Проверка данных первого пользователя из списка", () -> {
             List<ListUsersDataResponseModel> data = responseModel.getData();
-            assertThat(data.get(0).getId()).isEqualTo(7);
-            assertThat(data.get(0).getEmail()).isEqualTo("michael.lawson@reqres.in");
-            assertThat(data.get(0).getFirstName()).isEqualTo("Michael");
-            assertThat(data.get(0).getLastName()).isEqualTo("Lawson");
-            assertThat(data.get(0).getAvatar()).isEqualTo("https://reqres.in/img/faces/7-image.jpg");
+            assertAll(
+                    ()-> assertEquals((data.get(0).getId()), (7)),
+                    ()-> assertEquals((data.get(0).getEmail()), "michael.lawson@reqres.in"),
+                    ()-> assertEquals((data.get(0).getFirstName()), "Michael"),
+                    ()-> assertEquals((data.get(0).getLastName()), "Lawson"),
+                    ()-> assertEquals((data.get(0).getAvatar()), "https://reqres.in/img/faces/7-image.jpg")
+            );
         });
 
         step("Проверка данных о поддержке", () -> {
             ListUsersSupportDataResponseModel support = responseModel.getSupport();
-            assertThat(support.getUrl()).isEqualTo("https://reqres.in/#support-heading");
-            assertThat(support.getText()).isEqualTo("To keep ReqRes free, contributions towards server costs are appreciated!");
+            assertAll(
+                    ()-> assertEquals((support.getUrl()), "https://reqres.in/#support-heading"),
+                    ()-> assertEquals((support.getText()), "To keep ReqRes free, contributions towards server costs are appreciated!")
+            );
         });
     }
 
