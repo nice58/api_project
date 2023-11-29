@@ -1,5 +1,6 @@
 package tests;
 
+import endpoint.Endpoint;
 import models.LoginBodyModel;
 import models.LoginResponseModel;
 import models.MissingPasswordResponseModel;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static endpoint.Endpoint.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +34,7 @@ public class ReqresTests extends TestBase{
         ListUsersResponseModel responseModel = step ("Запрос на получение списка пользователей", () ->
         given(listUsersRequestSpec)
                 .when()
-                .get("/users?page=2")
+                .get(userListEndpoint)
                 .then()
                 .spec(listUsersResponseSpec)
                 .extract().as(ListUsersResponseModel.class));
@@ -72,7 +74,7 @@ public class ReqresTests extends TestBase{
         step("Запрос на поиск пользователя", () -> {
             given(notFoundUserRequestSpec)
                     .when()
-                    .get("/users/50")
+                    .get(userEndpoint,50)
                     .then()
                     .spec(notFoundUserResponseSpec);
         });
@@ -84,7 +86,7 @@ public class ReqresTests extends TestBase{
         step("Запрос на удаление пользователя", () -> {
             given(deleteUserRequestSpec)
                     .when()
-                    .delete("/users/5")
+                    .delete(userEndpoint, 5)
                     .then()
                     .spec(deleteUserResponseSpec);
         });
@@ -101,7 +103,7 @@ public class ReqresTests extends TestBase{
                 given(loginRequestSpec)
                     .body(autData)
                     .when()
-                    .post("/login")
+                    .post(loginEndpoint)
                     .then()
                      .spec(loginResponseSpec)
                     .extract().as(LoginResponseModel.class));
@@ -121,7 +123,7 @@ public class ReqresTests extends TestBase{
                 given(loginRequestSpec)
                     .body(autData)
                     .when()
-                    .post("/login")
+                    .post(loginEndpoint)
                     .then()
                     .spec(missingPasswordResponseSpec)
                     .extract().as(MissingPasswordResponseModel.class));
